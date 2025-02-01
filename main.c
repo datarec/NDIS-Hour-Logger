@@ -5,20 +5,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 void clearScreen() {
   system("cls");
 }
 
 
+void callScript() {
+  system("main");
+}
+
+
 void addClient() {
+  FILE* add;
   clearScreen();
   printf("----------------------------------------------------");
   printf("\n\n\t\tAdd Client");
-  FILE* add;
-  char client[] = "";
-  printf("\n\nClient name: ");
+  char client[20];
+  printf("\n\n\n\tClient name: ");
+  scanf("%s", &client);
   add = fopen("clients.txt", "a");
-  scanf("%s", client);
+  fprintf(add, "%s\n", client);
+  fclose(add);
+  printf("\n\tClient added!");
+  callScript();
 }
 
 
@@ -32,7 +42,6 @@ int main() {
   printf("\n\t3) Exit");
   printf("\n\n\n\tSelection: ");
   scanf("%d", &selection);
-  printf("%d", selection);
   if (selection == 1) {
     addClient();
   }
