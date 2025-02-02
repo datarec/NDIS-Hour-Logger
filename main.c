@@ -4,6 +4,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <windows.h>
+
+
+void sleep(int a) {
+  Sleep(a);
+}
 
 
 void clearScreen() {
@@ -27,7 +34,8 @@ void addClient() {
   add = fopen("clients.txt", "a");
   fprintf(add, "%s\n", client);
   fclose(add);
-  printf("\n\tClient added!");
+  printf("\n\n\tClient added!\n\n\t");
+  sleep(2000);
   callScript();
 }
 
