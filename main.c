@@ -8,8 +8,8 @@
 #include <windows.h>
 
 
-void sleep(int a) {
-  Sleep(a);
+void sleep(int t) {
+  Sleep(t);
 }
 
 
@@ -20,6 +20,20 @@ void clearScreen() {
 
 void callScript() {
   system("main");
+}
+
+void viewClients() {
+  int count = 1;
+  FILE* readClientFile;
+  clearScreen();
+  printf("----------------------------------------------------");
+  printf("\n\n\t\tView clients | Clock hours");
+  readClientFile = fopen("clients.txt", "r");
+  char clients[100];
+  while (fgets(clients, 100, readClientFile)) {
+    printf("\n\n\t%d) %s", count, clients);
+    count = count + 1;
+  }
 }
 
 
@@ -46,12 +60,15 @@ int main() {
   printf("----------------------------------------------------");
   printf("\n\n\t\tNDIS Logging System");
   printf("\n\n\n\t1) Add client");
-  printf("\n\t2) View clients");
+  printf("\n\t2) View clients | Clock hours");
   printf("\n\t3) Exit");
   printf("\n\n\n\tSelection: ");
   scanf("%d", &selection);
   if (selection == 1) {
     addClient();
+  }
+  else if (selection == 2) {
+    viewClients();
   }
   return 0;
 }
