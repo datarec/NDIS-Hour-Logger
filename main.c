@@ -64,11 +64,12 @@ int main() {
   printf("\n\t3) Exit");
   printf("\n\n\n\tSelection: ");
   scanf("%d", &selection);
-  if (selection == 1) {
-    addClient();
+  switch (selection) {
+    case 1:
+      addClient();
+    case 2:
+      viewClients();
+    case 3:
+      exit(1);
   }
-  else if (selection == 2) {
-    viewClients();
-  }
-  return 0;
 }
