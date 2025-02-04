@@ -1,1 +1,1 @@
-implement time breaks between refreshing. 
+during the process of adding a client also create a file for the client. 
