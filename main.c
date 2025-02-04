@@ -22,16 +22,17 @@ void callScript() {
   system("main");
 }
 
+
 void viewClients() {
   int count = 1;
   FILE* readClientFile;
   clearScreen();
   printf("----------------------------------------------------");
-  printf("\n\n\t\tView clients | Clock hours");
+  printf("\n\n\t\tView clients | Clock hours\n\n\n");
   readClientFile = fopen("clients.txt", "r");
   char clients[100];
   while (fgets(clients, 100, readClientFile)) {
-    printf("\n\n\t%d) %s", count, clients);
+    printf("\t%d) %s", count, clients);
     count = count + 1;
   }
 }
