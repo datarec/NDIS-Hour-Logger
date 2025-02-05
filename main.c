@@ -4,8 +4,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <windows.h>
+#include <string.h>
+
+
+void makeFiles(char cname[]) {
+  FILE* clientFileCreation; 
+  clientFileCreation = fopen("clienthours.txt", "a");
+  fprintf(clientFileCreation, "0");
+}
 
 
 void sleep(int t) {
@@ -24,6 +31,7 @@ void callScript() {
 
 
 void viewClients() {
+  int selection;
   int count = 1;
   FILE* readClientFile;
   clearScreen();
@@ -35,6 +43,8 @@ void viewClients() {
     printf("\t%d) %s", count, clients);
     count = count + 1;
   }
+  printf("\n\n\n\tSelection: ");
+  scanf("%d", selection);
 }
 
 
@@ -48,9 +58,10 @@ void addClient() {
   scanf("%s", &client);
   add = fopen("clients.txt", "a");
   fprintf(add, "%s\n", client);
-  fclose(add);
+  makeFiles(client);
   printf("\n\n\tClient added!\n\n\t");
   sleep(2000);
+  fclose(add);
   callScript();
 }
 
