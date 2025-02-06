@@ -11,7 +11,7 @@
 void makeFiles(char cname[]) {
   FILE* clientFileCreation; 
   clientFileCreation = fopen("clienthours.txt", "a");
-  fprintf(clientFileCreation, "0");
+  fprintf(clientFileCreation, "0\n");
 }
 
 
@@ -30,6 +30,32 @@ void callScript() {
 }
 
 
+void manageClientHours(int selection) {
+  FILE* client;
+  int selection;
+  int findName = 0;
+  clearScreen();
+  printf("----------------------------------------------------");
+  client = fopen("clients.txt", "r");
+  char clientName[20]; 
+  while (fgets(clientName, 20, client)) {
+    findName++;
+    if (findName == selection) {
+      break;
+    }
+  }
+  printf("\n\n\t\tClient: %s", clientName);
+  printf("\n\n\t1) Clock hours");
+  printf("\n\n\t2) View hours");
+  printf("\n\n\t3) Delete client");
+  printf("\n\n\t4) Exit");
+
+  
+
+  fclose(client);
+} 
+
+
 void viewClients() {
   int selection;
   int count = 1;
@@ -43,8 +69,10 @@ void viewClients() {
     printf("\t%d) %s", count, clients);
     count = count + 1;
   }
-  printf("\n\n\n\tSelection: ");
-  scanf("%d", selection);
+  printf("\n\n\tClient: ");
+  scanf("%d", &selection);
+  fclose(readClientFile);
+  manageClientHours(selection);
 }
 
 
@@ -74,7 +102,7 @@ int main() {
   printf("\n\n\n\t1) Add client");
   printf("\n\t2) View clients | Clock hours");
   printf("\n\t3) Exit");
-  printf("\n\n\n\tSelection: ");
+  printf("\n\n\n\tMain: ");
   scanf("%d", &selection);
   switch (selection) {
     case 1:
