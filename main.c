@@ -30,9 +30,19 @@ void callScript() {
 }
 
 
+void clockClientHours(char *clientName, int selection) {
+  clearScreen();
+  float hoursWorked; 
+  printf("----------------------------------------------------");
+  printf("\n\n\t\tClock hours for: %s\n\n", clientName);
+  printf("\tHours worked: ");
+  scanf("%f", &hoursWorked);
+}
+
+
 void manageClientHours(int selection) {
   FILE* client;
-  int selection;
+  int selectionOptions;
   int findName = 0;
   clearScreen();
   printf("----------------------------------------------------");
@@ -45,13 +55,17 @@ void manageClientHours(int selection) {
     }
   }
   printf("\n\n\t\tClient: %s", clientName);
-  printf("\n\n\t1) Clock hours");
-  printf("\n\n\t2) View hours");
-  printf("\n\n\t3) Delete client");
-  printf("\n\n\t4) Exit");
-
-  
-
+  printf("\n\n\t1) Clock hours\n");
+  printf("\t2) View hours\n");
+  printf("\t3) Delete client\n");
+  printf("\t4) Exit");
+  printf("\n\n\n\tOption: ");
+  scanf("%d", &selectionOptions);
+  switch (selectionOptions) {
+    case 1:
+      clockClientHours(clientName, selection);
+      
+  }
   fclose(client);
 } 
 
