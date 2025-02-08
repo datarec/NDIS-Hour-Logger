@@ -1,1 +1,1 @@
-no objectives currently. 
+make it so each user gets an individual .txt file for tracking hours worked. and make it so it gets created in the clients directory. 
