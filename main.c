@@ -92,6 +92,22 @@ void viewClients() {
 }
 
 
+void checkClientExists(char *client) {
+  FILE* clientFile;
+  clientFile = fopen("clients.txt", "r");
+  char nameCheck[50];
+  while (fgets(nameCheck, 50, clientFile)) {
+    nameCheck[strcspn(nameCheck, "\n")] = 0;
+    int nameCheckInt = strcmp(client, nameCheck);
+    if (nameCheckInt == 0) {
+      printf("\n\n\tThis client already exists.");
+      sleep(4000);
+      exit(1);
+    }
+  }
+}
+
+
 void addClient() {
   FILE* add;
   clearScreen();
@@ -100,6 +116,7 @@ void addClient() {
   char client[20];
   printf("\n\n\n\tClient name: ");
   scanf("%s", &client);
+  checkClientExists(client); // WORKING ON. 
   add = fopen("clients.txt", "a");
   fprintf(add, "%s\n", client);
   makeFiles(client);
