@@ -116,7 +116,7 @@ void addClient() {
   char client[20];
   printf("\n\n\n\tClient name: ");
   scanf("%s", &client);
-  checkClientExists(client); // WORKING ON. 
+  checkClientExists(client); 
   add = fopen("clients.txt", "a");
   fprintf(add, "%s\n", client);
   makeFiles(client);
