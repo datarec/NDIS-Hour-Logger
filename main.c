@@ -9,8 +9,10 @@
 
 
 void makeFiles(char cname[]) {
-  FILE* clientFileCreation; 
-  clientFileCreation = fopen("clienthours.txt", "a");
+  FILE* clientFileCreation;
+  char clientBuffer[50];
+  int concatFile = snprintf(clientBuffer, 50, "clients\\%s.txt", cname);
+  clientFileCreation = fopen(clientBuffer, "a");
   fprintf(clientFileCreation, "0\n");
 }
 
