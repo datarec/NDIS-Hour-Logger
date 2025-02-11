@@ -33,12 +33,27 @@ void callScript() {
 
 
 void clockClientHours(char *clientName, int selection) {
+  clientName[strcspn(clientName, "\n")] = 0;
+  FILE* hoursRead;
+  FILE* hoursWrite;
   clearScreen();
   float hoursWorked; 
   printf("----------------------------------------------------");
   printf("\n\n\t\tClock hours for: %s\n\n", clientName);
   printf("\tHours worked: ");
   scanf("%f", &hoursWorked);
+  char hourPath[100];
+  int hourPathTmp = snprintf(hourPath, 100, "clients\\%s.txt", clientName);
+  hoursRead = fopen(hourPath, "r");
+  char hourContent[50];
+  while (fgets(hourContent, 50, hoursRead)) {
+    hoursWrite = fopen(hourPath, "w");
+    float hourConvert = atof(hourContent);
+    float hoursAllTogether = hourConvert + hoursWorked;
+    printf("\n%f", hoursAllTogether);
+    //fprintf(hoursWrite, hoursAllTogetherChar);
+  }
+  // Sleep statement here. 
 }
 
 
@@ -57,11 +72,11 @@ void manageClientHours(int selection) {
     }
   }
   printf("\n\n\t\tClient: %s", clientName);
-  printf("\n\n\t1) Clock hours\n");
-  printf("\t2) View hours\n");
-  printf("\t3) Delete client\n");
-  printf("\t4) Exit");
-  printf("\n\n\n\tOption: ");
+  printf("\n\n\t1) clock hours\n");
+  printf("\t2) view hours\n");
+  printf("\t3) delete client\n");
+  printf("\t4) exit");
+  printf("\n\n\n\toption: ");
   scanf("%d", &selectionOptions);
   switch (selectionOptions) {
     case 1:
@@ -114,13 +129,13 @@ void addClient() {
   printf("----------------------------------------------------");
   printf("\n\n\t\tAdd Client");
   char client[20];
-  printf("\n\n\n\tClient name: ");
+  printf("\n\n\n\tclient name: ");
   scanf("%s", &client);
   checkClientExists(client); 
   add = fopen("clients.txt", "a");
   fprintf(add, "%s\n", client);
   makeFiles(client);
-  printf("\n\n\tClient added!\n\n\t");
+  printf("\n\n\tclient added!\n\n\t");
   sleep(2000);
   fclose(add);
   callScript();
@@ -132,9 +147,9 @@ int main() {
   int selection;
   printf("----------------------------------------------------");
   printf("\n\n\t\tNDIS Logging System");
-  printf("\n\n\n\t1) Add client");
-  printf("\n\t2) View clients | Clock hours");
-  printf("\n\t3) Exit");
+  printf("\n\n\n\t1) add client");
+  printf("\n\t2) view clients | Clock hours");
+  printf("\n\t3) exit");
   printf("\n\n\n\tMain: ");
   scanf("%d", &selection);
   switch (selection) {
