@@ -31,6 +31,21 @@ void callScript() {
   system("main");
 }
 
+void viewClientHours(char clientName[]) {
+  clientName[strcspn(clientName, "\n")] = 0;
+  clearScreen();
+  FILE* clientHourRead;
+  printf("----------------------------------------------------");
+  printf("\n\n\t\tView client: %s hours", clientName);
+  char clientBuffer[50];
+  int clientPath = snprintf(clientBuffer, 50, "clients\\%s.txt", clientName);
+  clientHourRead = fopen(clientBuffer, "r");
+  char clientHourBuffer[50];
+  while (fgets(clientHourBuffer, 50, clientHourRead)) {
+    printf("\n\n\n\tHours: %s", clientHourBuffer);
+  }
+}
+
 
 void clockClientHours(char *clientName, int selection) {
   clientName[strcspn(clientName, "\n")] = 0;
@@ -50,10 +65,10 @@ void clockClientHours(char *clientName, int selection) {
     hoursWrite = fopen(hourPath, "w");
     float hourConvert = atof(hourContent);
     float hoursAllTogether = hourConvert + hoursWorked;
-    printf("\n%f", hoursAllTogether);
-    //fprintf(hoursWrite, hoursAllTogetherChar);
+    fprintf(hoursWrite, "%.2f", hoursAllTogether);
+    printf("\n\n\thours clocked!");
   }
-  // Sleep statement here. 
+  sleep(2500); 
 }
 
 
@@ -81,6 +96,8 @@ void manageClientHours(int selection) {
   switch (selectionOptions) {
     case 1:
       clockClientHours(clientName, selection);
+    case 2:
+      viewClientHours(clientName);
       
   }
   fclose(client);
