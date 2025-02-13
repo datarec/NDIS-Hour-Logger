@@ -27,7 +27,7 @@ void clearScreen() {
 }
 
 
-void callScript() {
+void callProgram() {
   system("main");
 }
 
@@ -44,7 +44,8 @@ void viewClientHours(char clientName[]) {
   char clientHourBuffer[50];
   while (fgets(clientHourBuffer, 50, clientHourRead)) {
     printf("\n\n\n\tHours: %s", clientHourBuffer);
-    exit(1); // debug
+    sleep(2000);
+    callProgram();
   }
 }
 
@@ -70,7 +71,8 @@ void clockClientHours(char *clientName, int selection) {
     fprintf(hoursWrite, "%.2f", hoursAllTogether);
     printf("\n\n\thours clocked!");
   }
-  sleep(2500); 
+  sleep(2500);
+  callProgram(); 
 }
 
 
@@ -117,7 +119,7 @@ void viewClients() {
   char clients[100];
   while (fgets(clients, 100, readClientFile)) {
     printf("\t%d) %s", count, clients);
-    count = count + 1;
+    count++;
   }
   printf("\n\n\tclient: ");
   scanf("%d", &selection);
@@ -157,7 +159,7 @@ void addClient() {
   printf("\n\n\tclient added!\n\n\t");
   sleep(2000);
   fclose(add);
-  callScript();
+  callProgram();
 }
 
 
