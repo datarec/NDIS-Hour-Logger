@@ -31,6 +31,7 @@ void callScript() {
   system("main");
 }
 
+
 void viewClientHours(char clientName[]) {
   clientName[strcspn(clientName, "\n")] = 0;
   clearScreen();
@@ -43,6 +44,7 @@ void viewClientHours(char clientName[]) {
   char clientHourBuffer[50];
   while (fgets(clientHourBuffer, 50, clientHourRead)) {
     printf("\n\n\n\tHours: %s", clientHourBuffer);
+    exit(1); // debug
   }
 }
 
@@ -55,7 +57,7 @@ void clockClientHours(char *clientName, int selection) {
   float hoursWorked; 
   printf("----------------------------------------------------");
   printf("\n\n\t\tClock hours for: %s\n\n", clientName);
-  printf("\tHours worked: ");
+  printf("\n\tHours worked: ");
   scanf("%f", &hoursWorked);
   char hourPath[100];
   int hourPathTmp = snprintf(hourPath, 100, "clients\\%s.txt", clientName);
@@ -98,7 +100,7 @@ void manageClientHours(int selection) {
       clockClientHours(clientName, selection);
     case 2:
       viewClientHours(clientName);
-      
+    // NEEDS WORK
   }
   fclose(client);
 } 
@@ -117,7 +119,7 @@ void viewClients() {
     printf("\t%d) %s", count, clients);
     count = count + 1;
   }
-  printf("\n\n\tClient: ");
+  printf("\n\n\tclient: ");
   scanf("%d", &selection);
   fclose(readClientFile);
   manageClientHours(selection);
@@ -167,7 +169,7 @@ int main() {
   printf("\n\n\n\t1) add client");
   printf("\n\t2) view clients | Clock hours");
   printf("\n\t3) exit");
-  printf("\n\n\n\tMain: ");
+  printf("\n\n\n\tmain: ");
   scanf("%d", &selection);
   switch (selection) {
     case 1:
