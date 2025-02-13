@@ -32,6 +32,32 @@ void callProgram() {
 }
 
 
+void deleteClient(char *clientName) {
+  FILE* clients;
+  clientName[strcspn(clientName, "\n")] = 0;
+  char deletionConfirmation;
+  printf("\n\n\tare you sure you want to delete client %s y/n) ", clientName);
+  scanf(" %c", &deletionConfirmation);
+  clients = fopen("clients.txt", "r");
+  char newClients[50];
+  if (deletionConfirmation == 'y') {
+    int counter = 0;
+    char clientBuffer[50];
+    while (fgets(clientBuffer, 50, clients)) {
+      if (clientName != clientBuffer) {
+        newClients[counter] = *clientBuffer;
+        printf("%s", newClients[counter]);
+        counter++;
+      }
+      else {
+        printf("\nFAILED");
+      }
+    }
+  }
+  printf("%s", newClients[0]); // DEBUG
+}
+
+
 void viewClientHours(char clientName[]) {
   clientName[strcspn(clientName, "\n")] = 0;
   clearScreen();
@@ -102,6 +128,8 @@ void manageClientHours(int selection) {
       clockClientHours(clientName, selection);
     case 2:
       viewClientHours(clientName);
+    case 3:
+      deleteClient(clientName);
     // NEEDS WORK
   }
   fclose(client);
