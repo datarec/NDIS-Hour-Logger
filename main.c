@@ -28,16 +28,12 @@ void clearScreen() {
 }
 
 
-void callProgram() {
-  system("main");
-}
-
-
 void deleteClient(char *clientName) {
   FILE* clients;
   clientName[strcspn(clientName, "\n")] = 0;
   char pathConcat[50];
   int clientPath = snprintf(pathConcat, 50, "clients\\%s.txt", clientName);
+  printf("\nREMOVE PATH");
   remove(pathConcat);
   clients = fopen("clients.txt", "r");
   char clientFileContent[50];
@@ -53,7 +49,6 @@ void deleteClient(char *clientName) {
       reWriteContents = fopen("clients.txt", "w");
       fprintf(reWriteContents, clientFileContent);  
       printf("\nClient deleted!");
-      exit(1);
     }
   }
   if (counter == 1) {
@@ -62,7 +57,6 @@ void deleteClient(char *clientName) {
     printf("\n\tClient deleted");
     fclose(clients);
     fclose(removeContent);
-    exit(1);
   }
 }
 
@@ -80,7 +74,6 @@ void viewClientHours(char clientName[]) {
   while (fgets(clientHourBuffer, 50, clientHourRead)) {
     printf("\n\n\n\tHours: %s", clientHourBuffer);
     sleep(2000);
-    return;
   }
 }
 
@@ -109,7 +102,6 @@ void clockClientHours(char *clientName, int selection) {
   fclose(hoursRead);
   fclose(hoursWrite);
   sleep(2500);
-  return;
 }
 
 
@@ -137,15 +129,13 @@ void manageClientHours(int selection) {
   fclose(client);
   switch (selectionOptions) {
     case 1:
-      clockClientHours(clientName, selection);
-      manageClientHours(selection); 
+      clockClientHours(clientName, selection); 
     case 2:
       viewClientHours(clientName);
-      manageClientHours(selection);
     case 3:
       deleteClient(clientName);
     case 4:
-      return;
+      printf("\nHi");
     default: 
       exit(1);
   }
@@ -170,7 +160,6 @@ void viewClients() {
   scanf("%d", &selection);
   fclose(readClientFile);
   manageClientHours(selection);
-  return;
 }
 
 
@@ -204,8 +193,8 @@ void addClient() {
   makeFiles(client);
   printf("\n\n\tclient added!\n\n\t");
   sleep(2000);
-
   fclose(add);
+  exit(1);
 }
 
 
@@ -224,8 +213,9 @@ int main() {
       addClient();
     case 2:
       viewClients();
-      main();
     case 3:
+      exit(1);
+    default:
       exit(1);
   }
 }
