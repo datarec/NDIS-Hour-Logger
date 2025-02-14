@@ -39,7 +39,6 @@ void deleteClient(char *clientName) {
   char pathConcat[50];
   int clientPath = snprintf(pathConcat, 50, "clients\\%s.txt", clientName);
   remove(pathConcat);
-  // y
   clients = fopen("clients.txt", "r");
   char clientFileContent[50];
   int counter = 0;
@@ -47,18 +46,24 @@ void deleteClient(char *clientName) {
     clientFileContent[strcspn(clientFileContent, "\n")] = 0;
     //printf("\n%s : %s", clientName, clientFileContent); // DEBUG
     int clientComparison = strcmp(clientName, clientFileContent);
-    printf("\n%d", clientComparison); // DEBUG
+    //printf("\n%d", clientComparison); // DEBUG
+    counter++;
     if (clientComparison != 0) {
       FILE* reWriteContents;
       reWriteContents = fopen("clients.txt", "w");
       fprintf(reWriteContents, clientFileContent);  
       printf("\nClient deleted!");
-      sleep(2000); // DEBUG
+      exit(1);
     }
-    counter++;
   }
-  fclose(clients);
-  sleep(20000);
+  if (counter == 1) {
+    FILE* removeContent;
+    removeContent = fopen("clients.txt", "w");
+    printf("\n\tClient deleted");
+    fclose(clients);
+    fclose(removeContent);
+    exit(1);
+  }
 }
 
 
