@@ -1,3 +1,1 @@
-make it so each user gets an individual .txt file for tracking hours worked. and make it so it gets created in the clients directory. 
-
-we do this so that we can directly change hours logged based on user input easily. 
+add return statements to make the program functionality cleaner. 
