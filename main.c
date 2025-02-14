@@ -71,7 +71,7 @@ void viewClientHours(char clientName[]) {
   while (fgets(clientHourBuffer, 50, clientHourRead)) {
     printf("\n\n\n\tHours: %s", clientHourBuffer);
     sleep(2000);
-    callProgram();
+    return;
   }
 }
 
@@ -97,8 +97,10 @@ void clockClientHours(char *clientName, int selection) {
     fprintf(hoursWrite, "%.2f", hoursAllTogether);
     printf("\n\n\thours clocked!");
   }
+  fclose(hoursRead);
+  fclose(hoursWrite);
   sleep(2500);
-  callProgram(); 
+  return;
 }
 
 
@@ -120,17 +122,24 @@ void manageClientHours(int selection) {
   printf("\n\n\t1) clock hours\n");
   printf("\t2) view hours\n");
   printf("\t3) delete client\n");
-  printf("\t4) exit");
+  printf("\t4) main menu");
   printf("\n\n\n\toption: ");
   scanf("%d", &selectionOptions);
+  fclose(client);
   switch (selectionOptions) {
     case 1:
       clockClientHours(clientName, selection);
+      manageClientHours(selection); 
     case 2:
       viewClientHours(clientName);
+      manageClientHours(selection);
     case 3:
       deleteClient(clientName);
-    // NEEDS WORK
+    case 4:
+      printf("yoza");
+      return;
+    default: 
+      exit(1);
   }
   fclose(client);
 } 
@@ -153,6 +162,7 @@ void viewClients() {
   scanf("%d", &selection);
   fclose(readClientFile);
   manageClientHours(selection);
+  return;
 }
 
 
@@ -186,8 +196,8 @@ void addClient() {
   makeFiles(client);
   printf("\n\n\tclient added!\n\n\t");
   sleep(2000);
+
   fclose(add);
-  callProgram();
 }
 
 
@@ -206,6 +216,7 @@ int main() {
       addClient();
     case 2:
       viewClients();
+      main();
     case 3:
       exit(1);
   }
