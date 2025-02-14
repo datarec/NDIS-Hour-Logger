@@ -14,6 +14,7 @@ void makeFiles(char cname[]) {
   int concatFile = snprintf(clientBuffer, 50, "clients\\%s.txt", cname);
   clientFileCreation = fopen(clientBuffer, "a");
   fprintf(clientFileCreation, "0\n");
+  fclose(clientFileCreation);
 }
 
 
@@ -41,15 +42,22 @@ void deleteClient(char *clientName) {
   // y
   clients = fopen("clients.txt", "r");
   char clientFileContent[50];
+  int counter = 0;
   while (fgets(clientFileContent, 50, clients)) {
     clientFileContent[strcspn(clientFileContent, "\n")] = 0;
     //printf("\n%s : %s", clientName, clientFileContent); // DEBUG
     int clientComparison = strcmp(clientName, clientFileContent);
-    //printf("\n%d", clientComparison); // DEBUG
+    printf("\n%d", clientComparison); // DEBUG
     if (clientComparison != 0) {
-      printf("\nNO MATCH: %s", clientFileContent);
+      FILE* reWriteContents;
+      reWriteContents = fopen("clients.txt", "w");
+      fprintf(reWriteContents, clientFileContent);  
+      printf("\nClient deleted!");
+      sleep(2000); // DEBUG
     }
-  } 
+    counter++;
+  }
+  fclose(clients);
   sleep(20000);
 }
 
