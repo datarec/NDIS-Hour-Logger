@@ -35,26 +35,22 @@ void callProgram() {
 void deleteClient(char *clientName) {
   FILE* clients;
   clientName[strcspn(clientName, "\n")] = 0;
-  char deletionConfirmation;
-  printf("\n\n\tare you sure you want to delete client %s y/n) ", clientName);
-  scanf(" %c", &deletionConfirmation);
+  char pathConcat[50];
+  int clientPath = snprintf(pathConcat, 50, "clients\\%s.txt", clientName);
+  remove(pathConcat);
+  // y
   clients = fopen("clients.txt", "r");
-  char newClients[50];
-  if (deletionConfirmation == 'y') {
-    int counter = 0;
-    char clientBuffer[50];
-    while (fgets(clientBuffer, 50, clients)) {
-      if (clientName != clientBuffer) {
-        newClients[counter] = *clientBuffer;
-        printf("%s", newClients[counter]);
-        counter++;
-      }
-      else {
-        printf("\nFAILED");
-      }
+  char clientFileContent[50];
+  while (fgets(clientFileContent, 50, clients)) {
+    clientFileContent[strcspn(clientFileContent, "\n")] = 0;
+    //printf("\n%s : %s", clientName, clientFileContent); // DEBUG
+    int clientComparison = strcmp(clientName, clientFileContent);
+    //printf("\n%d", clientComparison); // DEBUG
+    if (clientComparison != 0) {
+      printf("\nNO MATCH: %s", clientFileContent);
     }
-  }
-  printf("%s", newClients[0]); // DEBUG
+  } 
+  sleep(20000);
 }
 
 
@@ -136,7 +132,6 @@ void manageClientHours(int selection) {
     case 3:
       deleteClient(clientName);
     case 4:
-      printf("yoza");
       return;
     default: 
       exit(1);
