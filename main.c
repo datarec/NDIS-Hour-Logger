@@ -33,7 +33,6 @@ void deleteClient(char *clientName) {
   clientName[strcspn(clientName, "\n")] = 0;
   char pathConcat[50];
   int clientPath = snprintf(pathConcat, 50, "clients\\%s.txt", clientName);
-  printf("\nREMOVE PATH");
   remove(pathConcat);
   clients = fopen("clients.txt", "r");
   char clientFileContent[50];
@@ -101,7 +100,7 @@ void clockClientHours(char *clientName, int selection) {
   }
   fclose(hoursRead);
   fclose(hoursWrite);
-  sleep(2500);
+  exit(1);
 }
 
 
@@ -127,17 +126,14 @@ void manageClientHours(int selection) {
   printf("\n\n\n\toption: ");
   scanf("%d", &selectionOptions);
   fclose(client);
-  switch (selectionOptions) {
-    case 1:
-      clockClientHours(clientName, selection); 
-    case 2:
-      viewClientHours(clientName);
-    case 3:
-      deleteClient(clientName);
-    case 4:
-      printf("\nHi");
-    default: 
-      exit(1);
+  if (selectionOptions == 1) {
+    clockClientHours(clientName, selection);
+  }
+  else if (selectionOptions == 2) {
+    viewClientHours(clientName);
+  }
+  else if (selectionOptions == 3) {
+    deleteClient(clientName);
   }
   fclose(client);
 } 
@@ -155,6 +151,11 @@ void viewClients() {
   while (fgets(clients, 100, readClientFile)) {
     printf("\t%d) %s", count, clients);
     count++;
+  }
+  int checkPreExistingUsers = strlen(clients);
+  if (checkPreExistingUsers < 2) {
+    printf("\n\tYou have no users added.");
+    exit(1);
   }
   printf("\n\n\tclient: ");
   scanf("%d", &selection);
@@ -208,14 +209,13 @@ int main() {
   printf("\n\t3) exit");
   printf("\n\n\n\tmain: ");
   scanf("%d", &selection);
-  switch (selection) {
-    case 1:
-      addClient();
-    case 2:
-      viewClients();
-    case 3:
-      exit(1);
-    default:
-      exit(1);
+  if (selection == 1) {
+    addClient();
+  }
+  else if (selection == 2) {
+    viewClients();
+  }
+  else if (selection == 3) {
+    exit(1);
   }
 }
