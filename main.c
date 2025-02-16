@@ -156,7 +156,6 @@ void viewClients() {
   int checkPreExistingUsers = strlen(clients);
   if (checkPreExistingUsers < 2) {
     printf("\n\tYou have no users added.");
-    exit(1);
     sleep(2000);
     return;
   }
@@ -176,11 +175,9 @@ void checkClientExists(char *client) {
     int nameCheckInt = strcmp(client, nameCheck);
     if (nameCheckInt == 0) {
       printf("\n\n\tThis client already exists.");
-      sleep(4000);
-      exit(1);
       sleep(2000);
       clientExists = 1;
-      return; // DEBUG
+      return; 
     }
   }
 }
@@ -195,14 +192,6 @@ void addClient() {
   printf("\n\n\n\tclient name: ");
   scanf("%s", &client);
   checkClientExists(client); 
-  add = fopen("clients.txt", "a");
-  fprintf(add, "%s\n", client);
-  makeFiles(client);
-  printf("\n\n\tclient added!\n\n\t");
-  sleep(2000);
-  fclose(add);
-  exit(1);
-  checkClientExists(client);
   if (clientExists == 1) {
     return;
   }
