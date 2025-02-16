@@ -40,15 +40,13 @@ void deleteClient(char *clientName) {
   int counter = 0;
   while (fgets(clientFileContent, 50, clients)) {
     clientFileContent[strcspn(clientFileContent, "\n")] = 0;
-    //printf("\n%s : %s", clientName, clientFileContent); // DEBUG
     int clientComparison = strcmp(clientName, clientFileContent);
-    //printf("\n%d", clientComparison); // DEBUG
     counter++;
     if (clientComparison != 0) {
       FILE* reWriteContents;
       reWriteContents = fopen("clients.txt", "w");
       fprintf(reWriteContents, clientFileContent);  
-      printf("\nClient deleted!");
+      printf("\n[!] client deleted!");
       fclose(reWriteContents);
       fclose(clients);
       sleep(2000);
@@ -58,7 +56,7 @@ void deleteClient(char *clientName) {
   if (counter == 1) {
     FILE* removeContent;
     removeContent = fopen("clients.txt", "w");
-    printf("\n\tClient deleted");
+    printf("\n    [!] client deleted!");
     fclose(clients);
     fclose(removeContent);
     sleep(2000);
@@ -78,7 +76,7 @@ void viewClientHours(char clientName[]) {
   clientHourRead = fopen(clientBuffer, "r");
   char clientHourBuffer[50];
   while (fgets(clientHourBuffer, 50, clientHourRead)) {
-    printf("\n\n\n\tHours: %s", clientHourBuffer);
+    printf("\n\n\n\thours: %s", clientHourBuffer);
     sleep(2000);
   }
 }
@@ -92,7 +90,7 @@ void clockClientHours(char *clientName, int selection) {
   float hoursWorked; 
   printf("----------------------------------------------------");
   printf("\n\n\t\tClock hours for: %s\n\n", clientName);
-  printf("\n\tHours worked: ");
+  printf("\n\thours worked: ");
   scanf("%f", &hoursWorked);
   char hourPath[100];
   int hourPathTmp = snprintf(hourPath, 100, "clients\\%s.txt", clientName);
@@ -103,7 +101,7 @@ void clockClientHours(char *clientName, int selection) {
     float hourConvert = atof(hourContent);
     float hoursAllTogether = hourConvert + hoursWorked;
     fprintf(hoursWrite, "%.2f", hoursAllTogether);
-    printf("\n\n\thours clocked!");
+    printf("\n\n    [!] hours clocked!");
   }
   fclose(hoursRead);
   fclose(hoursWrite);
@@ -163,7 +161,8 @@ void viewClients() {
   }
   int checkPreExistingUsers = strlen(clients);
   if (checkPreExistingUsers < 2) {
-    printf("\n\tYou have no users added.");
+    fclose(readClientFile);
+    printf("\n    [!] you have no clients, add some.");
     sleep(2000);
     return;
   }
@@ -182,7 +181,7 @@ void checkClientExists(char *client) {
     nameCheck[strcspn(nameCheck, "\n")] = 0;
     int nameCheckInt = strcmp(client, nameCheck);
     if (nameCheckInt == 0) {
-      printf("\n\n\tThis client already exists.");
+      printf("\n\n    [!] this client already exists.");
       sleep(2000);
       clientExists = 1;
       return; 
@@ -207,7 +206,7 @@ void addClient() {
     add = fopen("clients.txt", "a");
     fprintf(add, "%s\n", client);
     makeFiles(client);
-    printf("\n\n\tclient added!\n\n\t");
+    printf("\n\n    [!] client added!\n\n\t");
     sleep(2000);
     fclose(add);
   }
@@ -220,7 +219,7 @@ int main() {
   printf("----------------------------------------------------");
   printf("\n\n\t\tNDIS Logging System");
   printf("\n\n\n\t1) add client");
-  printf("\n\t2) view clients | Clock hours");
+  printf("\n\t2) view clients | clock hours");
   printf("\n\t3) exit");
   printf("\n\n\n\tmain: ");
   scanf("%d", &selection);
