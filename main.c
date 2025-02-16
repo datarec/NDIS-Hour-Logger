@@ -49,6 +49,10 @@ void deleteClient(char *clientName) {
       reWriteContents = fopen("clients.txt", "w");
       fprintf(reWriteContents, clientFileContent);  
       printf("\nClient deleted!");
+      fclose(reWriteContents);
+      fclose(clients);
+      sleep(2000);
+      return;
     }
   }
   if (counter == 1) {
@@ -57,6 +61,8 @@ void deleteClient(char *clientName) {
     printf("\n\tClient deleted");
     fclose(clients);
     fclose(removeContent);
+    sleep(2000);
+    return;
   }
 }
 
@@ -101,7 +107,8 @@ void clockClientHours(char *clientName, int selection) {
   }
   fclose(hoursRead);
   fclose(hoursWrite);
-  exit(1);
+  sleep(2000);
+  return;
 }
 
 
@@ -129,6 +136,7 @@ void manageClientHours(int selection) {
   fclose(client);
   if (selectionOptions == 1) {
     clockClientHours(clientName, selection);
+    manageClientHours(selection);
   }
   else if (selectionOptions == 2) {
     viewClientHours(clientName);
@@ -225,6 +233,8 @@ int main() {
     main();
   }
   else if (selection == 3) {
+    printf("\n\tgoodbye!");
+    sleep(1000);
     exit(1);
   }
 }
